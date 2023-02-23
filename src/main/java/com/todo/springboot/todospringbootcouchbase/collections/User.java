@@ -7,20 +7,23 @@ import org.springframework.data.couchbase.core.mapping.id.GeneratedValue;
 import org.springframework.data.couchbase.core.mapping.id.GenerationStrategy;
 
 @Document
-public class User{
+public class User {
     @GeneratedValue(strategy = GenerationStrategy.UNIQUE)
     @Field(value = "id")
     @Id
     private String id;
     @Field(value = "email")
-    private String email; 
+    private String email;
     @Field(value = "update_time")
-    private long updatedTime; 
+    private long updatedTime;
     @Field(value = "created_time")
     private long createdTime;
 
     @Field(value = "password")
     private String password;
+
+    @Field(value = "status")
+    private int status = UserStatus.ACTIVE;
 
 
     public String getId() {
@@ -63,6 +66,14 @@ public class User{
         this.password = password;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -71,6 +82,7 @@ public class User{
                 ", updatedTime=" + updatedTime +
                 ", createdTime=" + createdTime +
                 ", password='" + password + '\'' +
+                ", status=" + status +
                 '}';
     }
 }

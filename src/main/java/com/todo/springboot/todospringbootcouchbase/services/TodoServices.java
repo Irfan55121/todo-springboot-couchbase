@@ -1,6 +1,5 @@
 package com.todo.springboot.todospringbootcouchbase.services;
 
-import com.todo.springboot.todospringbootcouchbase.controllers.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

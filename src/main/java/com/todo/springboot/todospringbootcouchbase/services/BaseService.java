@@ -1,4 +1,4 @@
-package com.todo.springboot.todospringbootcouchbase.controllers;
+package com.todo.springboot.todospringbootcouchbase.services;
 
 import com.todo.springboot.todospringbootcouchbase.error.ErrorResponse;
 import org.springframework.http.HttpStatus;
