@@ -33,4 +33,8 @@ public class UserService extends BaseService {
         return userRepository.saveAll(users);
     }
 
+    public Iterable<User> getAllUsers(){
+        return userRepository.findAll();
+    }
+
 }

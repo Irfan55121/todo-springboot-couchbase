@@ -33,4 +33,16 @@ public class TodoServices extends BaseService {
         todo.setUpdated_time(System.currentTimeMillis());
         return ResponseEntity.ok(todoRepository.save(todo));
     }
+
+    public ResponseEntity<?> saveAll(List<Todo> todoList){
+       return ResponseEntity.ok(todoRepository.saveAll(todoList));
+    }
+
+    public long getCount(){
+        return todoRepository.count();
+    }
+
+    public void deleteAll() {
+        todoRepository.deleteAll();
+    }
 }
