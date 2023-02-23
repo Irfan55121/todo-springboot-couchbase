@@ -12,11 +12,7 @@ public class UserService extends BaseService {
     private UserRepository userRepository;
 
     public User getUser(String emailId) {
-        Iterable<User> userList = userRepository.findAll();
-        for (User user : userList) {
-            if (user.getEmail().equals(emailId)) return user;
-        }
-        return null;
+        return userRepository.findUserByEmail(emailId);
     }
 
     public User save(User user) {
