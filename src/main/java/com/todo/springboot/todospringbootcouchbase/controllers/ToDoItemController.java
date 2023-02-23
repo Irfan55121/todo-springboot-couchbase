@@ -3,12 +3,10 @@ package com.todo.springboot.todospringbootcouchbase.controllers;
 import com.todo.springboot.todospringbootcouchbase.collections.Todo;
 import com.todo.springboot.todospringbootcouchbase.collections.TodoItem;
 import com.todo.springboot.todospringbootcouchbase.services.ToDoItemService;
+import com.todo.springboot.todospringbootcouchbase.services.TodoServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,4 +28,15 @@ public class ToDoItemController {
         todo.setUpdatedTime(System.currentTimeMillis());
         return toDoItemService.save(todo);
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/dump-todo-items")
+    public ResponseEntity<?> dumpTodoItems(@RequestParam("count") int count) {
+        return toDoItemService.dumpTodoItems(count);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/count-todo-items")
+    public ResponseEntity<?> getTodoItemCount() {
+        return toDoItemService.count();
+    }
+
 }

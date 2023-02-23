@@ -34,15 +34,23 @@ public class TodoServices extends BaseService {
         return ResponseEntity.ok(todoRepository.save(todo));
     }
 
-    public ResponseEntity<?> saveAll(List<Todo> todoList){
-       return ResponseEntity.ok(todoRepository.saveAll(todoList));
+    public ResponseEntity<?> saveAll(List<Todo> todoList) {
+        return ResponseEntity.ok(todoRepository.saveAll(todoList));
     }
 
-    public long getCount(){
+    public long getCount() {
         return todoRepository.count();
     }
 
     public void deleteAll() {
         todoRepository.deleteAll();
+    }
+
+    public Iterable<Todo> getAll() {
+        return todoRepository.findAll();
+    }
+
+    public Iterable<Todo> getAll(int limit) {
+        return todoRepository.getAll(limit);
     }
 }
