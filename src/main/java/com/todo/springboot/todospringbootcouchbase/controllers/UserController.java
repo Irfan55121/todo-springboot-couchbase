@@ -1,14 +1,19 @@
 package com.todo.springboot.todospringbootcouchbase.controllers;
 
+import com.couchbase.client.java.json.JsonObject;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.todo.springboot.todospringbootcouchbase.collections.User;
 import com.todo.springboot.todospringbootcouchbase.error.ErrorResponse;
 import com.todo.springboot.todospringbootcouchbase.services.UserService;
+import com.todo.springboot.todospringbootcouchbase.utils.StringGenerator;
+import com.todo.springboot.todospringbootcouchbase.utils.UserUtils;
+import org.apache.tomcat.Jar;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.couchbase.repository.Query;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -65,5 +70,40 @@ public class UserController {
         createdUser.setPassword(null);
 
         return ResponseEntity.ok(createdUser);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/dump-users")
+    public ResponseEntity<?> dumpUsers(@RequestParam("count") long count) {
+
+        if (count <= 0) return userService.getBadRequestError("invalid count");
+
+        List<User> userList = UserUtils.getUsers(count);
+        Iterable<User> createdList = userService.saveAll(userList);
+
+        JsonObject jsonObject = JsonObject.create();
+        jsonObject.put("successCount", true);
+
+        return ResponseEntity.ok(jsonObject.toString());
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/users-count")
+    public ResponseEntity<?> getUserCount() {
+
+        long size = userService.getUserCount();
+
+        JsonObject jsonObject = JsonObject.create();
+        jsonObject.put("user_count", size);
+
+        return ResponseEntity.ok(jsonObject.toString());
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/delete-users")
+    public ResponseEntity<?> deleteUsers() {
+        userService.deleteUsers();
+
+        JsonObject jsonObject = JsonObject.create();
+        jsonObject.put("deleted", true);
+
+        return ResponseEntity.ok(jsonObject.toString());
     }
 }
