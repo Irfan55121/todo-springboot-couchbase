@@ -1,8 +1,11 @@
 package com.todo.springboot.todospringbootcouchbase.couchbase;
 
+import com.couchbase.client.core.env.TimeoutConfig;
 import com.couchbase.client.java.env.ClusterEnvironment;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.couchbase.config.AbstractCouchbaseConfiguration;
+
+import java.time.Duration;
 
 @Configuration
 public class ToDoCouchbaseConfig extends AbstractCouchbaseConfiguration {
@@ -30,5 +33,12 @@ public class ToDoCouchbaseConfig extends AbstractCouchbaseConfiguration {
     @Override
     protected String getScopeName() {
         return "todo_user";
+    }
+
+    @Override
+    protected void configureEnvironment(ClusterEnvironment.Builder builder) {
+        builder.timeoutConfig(TimeoutConfig.kvDurableTimeout(Duration.ofMinutes(5))
+                .queryTimeout(Duration.ofMinutes(5)));
+        super.configureEnvironment(builder);
     }
 }
