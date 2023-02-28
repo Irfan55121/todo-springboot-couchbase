@@ -6,4 +6,4 @@
 
 and count query response time is around 3 to 4 mins on average. 
 
-- for quick search Elastic search implementation is planned 
+- To improve text search "Elastic search" implementation is planned 
